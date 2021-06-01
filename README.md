@@ -14,6 +14,12 @@ O algoritmo de ancestrais comuns mais baixos off-line de Tarjan é um algoritmo 
 4. No terminal, dentro da pasta do projeto execute: `npm start`
 5. Abra o navegador e acesse [http://localhost:3000/](http://localhost:3000/)
 
+## Estrutura do projeto
+
+- O algoritmo pricipal, que executa o 'Tarjan's off-line lowest common ancestors algorithm', está dentro da pasta src > utils > TarjanOLCA.js
+- Foi utilizado React para facilitar/agilizar o desenvolvimento web. Mas a estrura foi simplificada para que não ficasse tão complicado o entendimento do mesmo.
+- A interface web está implementada no arquivo src > App.js. E nesse mesmo arquivo o TarjanOLCA.js é importado e executado.
+
 ### Desenvolvedor
 
 👤 **Joaldino Neto**
