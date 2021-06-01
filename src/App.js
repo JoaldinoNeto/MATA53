@@ -1,6 +1,8 @@
 import { useState, Fragment } from "react";
 
 import Button from "@material-ui/core/Button";
+import Graph from "react-graph-vis";
+import { pick } from "lodash";
 
 import { Container, Aside, FormCreateGraph } from "./style";
 import TarjanOLCA from "./utils/TarjanOLCA";
@@ -10,17 +12,26 @@ function App() {
     { nodeKey: "node_0", nodeValue: "", linkKey: "link_0", linkValue: "" },
   ]);
   const [lowestCommonAncestors, setLowestCommonAncestors] = useState({});
+  const [graph, setGraph] = useState({ nodes: [], edges: [] });
+
+  const [resInputValues, setResInputValues] = useState([
+    { n_one: "", n_one: "" },
+  ]);
 
   const handleSubmitForm = () => {
     let currentTree = [];
 
-    for (let input of inputValues) {
-      if (input.nodeValue) {
+    for (let index in inputValues) {
+      if (inputValues[index].nodeValue) {
         currentTree.push({
-          label: input.nodeValue || input.nodeKey,
+          id: typeof index === "string" ? parseInt(index, 10) : index,
+          label: inputValues[index].nodeValue || inputValues[index].nodeKey,
           children:
-            input?.linkValue && input?.linkValue.length > 0
-              ? (input.linkValue || "").replaceAll(" ", "").split(",")
+            inputValues[index]?.linkValue &&
+            inputValues[index]?.linkValue.length > 0
+              ? (inputValues[index].linkValue || "")
+                  .replaceAll(" ", "")
+                  .split(",")
               : [],
           parent: undefined,
           rank: undefined,
@@ -30,6 +41,25 @@ function App() {
       }
     }
 
+    // Dsenha Grafo
+    let currentGraph = {
+      nodes: currentTree.map((node) => pick(node, ["id", "label"])),
+      edges: [],
+    };
+    for (let node of currentTree || []) {
+      // console.log("node: ", node);
+      for (let children of node?.children || []) {
+        // console.log("children: ", children);
+        currentGraph.edges.push({
+          from: node.id,
+          to: currentTree.find((n) => n.label === children)?.id,
+        });
+      }
+    }
+    // setGraph(currentGraph);
+    // console.log(currentGraph);
+
+    // Executa algortimo
     TarjanOLCA(currentTree, currentTree[0].label, setLowestCommonAncestors);
 
     // console.log(currentTree);
@@ -48,6 +78,22 @@ function App() {
     ] = element.currentTarget.value;
 
     setInputValues(newInputValues);
+  };
+
+  const options = {
+    layout: {
+      hierarchical: true,
+    },
+    edges: {
+      color: "#000000",
+    },
+    height: "500px",
+  };
+
+  const events = {
+    select: function (event) {
+      var { nodes, edges } = event;
+    },
   };
 
   return (
@@ -76,12 +122,12 @@ function App() {
                     type="text"
                     name={input.nodeKey}
                     onChange={(element) => handleInputValues(element)}
-                  ></input>
+                  />
                   <input
                     type="text"
                     name={input.linkKey}
                     onChange={(element) => handleInputValues(element)}
-                  ></input>
+                  />
                 </Fragment>
               ))}
 
@@ -116,7 +162,52 @@ function App() {
         </div>
       </Aside>
 
-      <div onClick={() => console.log(lowestCommonAncestors)}>Teste</div>
+      <div style={{ width: "100%", height: "100%" }}>
+        <div>
+          Menor ancestral comum de{" "}
+          <input
+            type="text"
+            name="n_one"
+            onChange={(element) =>
+              setResInputValues({
+                ...resInputValues,
+                n_one: element.currentTarget.value,
+              })
+            }
+          />{" "}
+          e{" "}
+          <input
+            type="text"
+            name="n_two"
+            onChange={(element) =>
+              setResInputValues({
+                ...resInputValues,
+                n_two: element.currentTarget.value,
+              })
+            }
+          />{" "}
+          é{" "}
+          <strong>
+            {lowestCommonAncestors?.[
+              `${resInputValues.n_one}_${resInputValues.n_two}`
+            ] ||
+              lowestCommonAncestors?.[
+                `${resInputValues.n_two}_${resInputValues.n_one}`
+              ] ||
+              ""}
+          </strong>
+          .
+        </div>
+
+        <div style={{ width: "100%", height: "100%" }}>
+          <Graph
+            graph={graph}
+            options={options}
+            events={events}
+            getNetwork={(network) => {}}
+          />
+        </div>
+      </div>
     </Container>
   );
 }
