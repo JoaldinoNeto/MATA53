@@ -2,7 +2,7 @@ import { useState, Fragment } from "react";
 
 import Button from "@material-ui/core/Button";
 import Graph from "react-graph-vis";
-import { pick } from "lodash";
+import { isEmpty, pick } from "lodash";
 
 import { Container, Aside, FormCreateGraph } from "./style";
 import TarjanOLCA from "./utils/TarjanOLCA";
@@ -156,7 +156,7 @@ function App() {
               style={{ marginTop: 32 }}
               onClick={handleSubmitForm}
             >
-              Carregar Gráfico
+              Carregar Grafo
             </Button>
           </FormCreateGraph>
         </div>
@@ -164,39 +164,48 @@ function App() {
 
       <div style={{ width: "100%", height: "100%" }}>
         <div>
-          Menor ancestral comum de{" "}
-          <input
-            type="text"
-            name="n_one"
-            onChange={(element) =>
-              setResInputValues({
-                ...resInputValues,
-                n_one: element.currentTarget.value,
-              })
-            }
-          />{" "}
-          e{" "}
-          <input
-            type="text"
-            name="n_two"
-            onChange={(element) =>
-              setResInputValues({
-                ...resInputValues,
-                n_two: element.currentTarget.value,
-              })
-            }
-          />{" "}
-          é{" "}
-          <strong>
-            {lowestCommonAncestors?.[
-              `${resInputValues.n_one}_${resInputValues.n_two}`
-            ] ||
-              lowestCommonAncestors?.[
-                `${resInputValues.n_two}_${resInputValues.n_one}`
-              ] ||
-              ""}
-          </strong>
-          .
+          {!isEmpty(lowestCommonAncestors) ? (
+            <>
+              Menor ancestral comum de{" "}
+              <input
+                type="text"
+                name="n_one"
+                onChange={(element) =>
+                  setResInputValues({
+                    ...resInputValues,
+                    n_one: element.currentTarget.value,
+                  })
+                }
+              />{" "}
+              e{" "}
+              <input
+                type="text"
+                name="n_two"
+                onChange={(element) =>
+                  setResInputValues({
+                    ...resInputValues,
+                    n_two: element.currentTarget.value,
+                  })
+                }
+              />{" "}
+              é{" "}
+              <strong>
+                {lowestCommonAncestors?.[
+                  `${resInputValues.n_one}_${resInputValues.n_two}`
+                ] ||
+                  lowestCommonAncestors?.[
+                    `${resInputValues.n_two}_${resInputValues.n_one}`
+                  ] ||
+                  ""}
+              </strong>
+              .
+            </>
+          ) : (
+            <>
+              Preencha as informações do grafo ao lado e cllique em CARREGAR
+              GRÁFO
+            </>
+          )}
         </div>
 
         <div style={{ width: "100%", height: "100%" }}>
