@@ -41,8 +41,10 @@ let globalTree = [
   },
 ];
 
+let lowestCommonAncestorsState = {};
+
 function MakeSet(tree, x) {
-  console.log(`MakeSet: ${x}`);
+  // console.log(`MakeSet: ${x}`);
 
   const xIndex = tree.findIndex((node) => node.label === x);
 
@@ -51,7 +53,7 @@ function MakeSet(tree, x) {
 }
 
 function Find(tree, x) {
-  console.log(`Find: ${x}`);
+  // console.log(`Find: ${x}`);
 
   const xIndex = tree.findIndex((node) => node.label === x);
 
@@ -63,22 +65,22 @@ function Find(tree, x) {
 }
 
 function Union(tree, x, y) {
-  console.log(`Union: ${x}, ${y}`);
+  // console.log(`Union: ${x}, ${y}`);
 
-  xRoot = Find(tree, x);
-  yRoot = Find(tree, y);
+  const xRoot = Find(tree, x);
+  const yRoot = Find(tree, y);
 
   if (tree[xRoot].rank > tree[yRoot].rank) {
     tree[yRoot].parent = xRoot;
   } else if (tree[xRoot].rank < tree[yRoot].rank) {
     tree[xRoot].parent = yRoot;
-  } else if (tree[xRoot].rank == tree[yRoot].rank) {
+  } else if (tree[xRoot].rank === tree[yRoot].rank) {
     tree[yRoot].parent = xRoot;
     tree[xRoot].rank = tree[xRoot].rank + 1;
   }
 }
 
-function TarjanOLCA(tree, currentNode) {
+function TarjanOLCA(tree, currentNode, setState) {
   console.log("=====");
   console.log(`-> node: ${currentNode}`);
 
@@ -98,10 +100,20 @@ function TarjanOLCA(tree, currentNode) {
 
   for (let v of tree) {
     if (v.color === "black") {
+      let nodeOne = tree[currentNodeIndex].label;
+      let nodeTwo = v.label;
+      let lowestCommonAncestors =
+        tree[tree[Find(tree, v.label)].ancestor].label;
+
+      if (setState) {
+        lowestCommonAncestorsState[`${nodeOne}_${nodeTwo}`] =
+          lowestCommonAncestors;
+
+        setState(lowestCommonAncestorsState);
+      }
+
       console.log(
-        `=> Menor ancestral comum de ${tree[currentNodeIndex].label} e ${
-          v.label
-        } é ${tree[tree[Find(tree, v.label)].ancestor].label}.`
+        `=> Menor ancestral comum de ${nodeOne} e ${nodeTwo} é ${lowestCommonAncestors}.`
       );
     }
   }
@@ -110,5 +122,7 @@ function TarjanOLCA(tree, currentNode) {
 console.log("# Tarjan's off-line lowest common ancestors algorithm #\n");
 TarjanOLCA(globalTree, "A");
 
-console.log("\n\n# Resultado do state #\n");
-console.log(globalTree);
+// console.log("\n\n# Resultado do state #\n");
+// console.log(globalTree);
+
+export default TarjanOLCA;
