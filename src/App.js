@@ -57,14 +57,13 @@ function App() {
       }
     }
     setGraph(currentGraph);
-    console.log(currentGraph);
 
     // Executa algortimo
     TarjanOLCA(currentTree, currentTree[0].label, setLowestCommonAncestors);
 
     // console.log(currentTree);
   };
-  console.log(graph);
+  console.log(lowestCommonAncestors);
 
   const handleInputValues = (element) => {
     const index = inputValues.findIndex(

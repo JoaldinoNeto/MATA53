@@ -105,17 +105,18 @@ function TarjanOLCA(tree, currentNode, setState) {
       let lowestCommonAncestors =
         tree[tree[Find(tree, v.label)].ancestor].label;
 
-      if (setState) {
-        lowestCommonAncestorsState[`${nodeOne}_${nodeTwo}`] =
-          lowestCommonAncestors;
-
-        setState(lowestCommonAncestorsState);
-      }
+      lowestCommonAncestorsState[`${nodeOne}_${nodeTwo}`] =
+        lowestCommonAncestors;
 
       console.log(
         `=> Menor ancestral comum de ${nodeOne} e ${nodeTwo} é ${lowestCommonAncestors}.`
       );
     }
+  }
+
+  // Utilizado pra funcionamento da interface React
+  if (setState) {
+    setState(lowestCommonAncestorsState);
   }
 }
 
