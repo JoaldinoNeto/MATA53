@@ -47,9 +47,7 @@ function App() {
       edges: [],
     };
     for (let node of currentTree || []) {
-      // console.log("node: ", node);
       for (let children of node?.children || []) {
-        // console.log("children: ", children);
         currentGraph.edges.push({
           from: node.id,
           to: currentTree.find((n) => n.label === children)?.id,
@@ -63,7 +61,6 @@ function App() {
 
     // console.log(currentTree);
   };
-  console.log(lowestCommonAncestors);
 
   const handleInputValues = (element) => {
     const index = inputValues.findIndex(

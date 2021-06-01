@@ -20,11 +20,18 @@ Para acessar a demonstração [clique aqui](https://mata-53.vercel.app).
 
 ## Estrutura do projeto
 
-- O algoritmo pricipal, que executa o 'Tarjan's off-line lowest common ancestors algorithm', está dentro da pasta src > utils > TarjanOLCA.js
+- O algoritmo pricipal, que executa o "Tarjan's off-line lowest common ancestors algorithm", está dentro da pasta src > utils > TarjanOLCA.js
 - Foi utilizado React para facilitar/agilizar o desenvolvimento web. Mas a estrura foi simplificada para que não ficasse tão complicado o entendimento do mesmo.
 - A interface web está implementada no arquivo src > App.js. E nesse mesmo arquivo o TarjanOLCA.js é importado e executado.
 
-### Desenvolvedor
+### Estrutura do projeto
+
+- É possível executar o algoritmo "Tarjan's off-line lowest common ancestors" isoladamente. Para isso, basta navegar até a pasta do arquivo e executar `node TarjanOLCA.js` no terminal.
+- Nessa situação será executado o algoritmo com base em um grafo default (padrão).
+
+  ![grafo default](https://github.com/JoaldinoNeto/MATA53/blob/main/public/grafo_default.jpg?raw=true)
+
+## Desenvolvedor
 
 👤 **Joaldino Neto**
 
