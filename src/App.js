@@ -56,14 +56,15 @@ function App() {
         });
       }
     }
-    // setGraph(currentGraph);
-    // console.log(currentGraph);
+    setGraph(currentGraph);
+    console.log(currentGraph);
 
     // Executa algortimo
     TarjanOLCA(currentTree, currentTree[0].label, setLowestCommonAncestors);
 
     // console.log(currentTree);
   };
+  console.log(graph);
 
   const handleInputValues = (element) => {
     const index = inputValues.findIndex(
@@ -209,12 +210,17 @@ function App() {
         </div>
 
         <div style={{ width: "100%", height: "100%" }}>
-          <Graph
-            graph={graph}
-            options={options}
-            events={events}
-            getNetwork={(network) => {}}
-          />
+          {graph.nodes &&
+            graph.nodes.length > 0 &&
+            graph.edges &&
+            graph.edges.length > 0 && (
+              <Graph
+                graph={graph}
+                options={options}
+                events={events}
+                getNetwork={(network) => {}}
+              />
+            )}
         </div>
       </div>
     </Container>
