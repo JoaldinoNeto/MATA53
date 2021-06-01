@@ -15,7 +15,7 @@ function App() {
   const [graph, setGraph] = useState({ nodes: [], edges: [] });
 
   const [resInputValues, setResInputValues] = useState([
-    { n_one: "", n_one: "" },
+    { n_one: "", n_two: "" },
   ]);
 
   const handleSubmitForm = () => {
