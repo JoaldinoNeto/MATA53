@@ -4,7 +4,7 @@ O algoritmo de ancestrais comuns mais baixos off-line de Tarjan é um algoritmo 
 
 ### Demonstração
 
-[Clique aqui](https://mata-53.vercel.app) para acesso a demonstração.
+Para acessar a demonstração [clique aqui](https://mata-53.vercel.app).
 
 ## Pré-requisitos
 
