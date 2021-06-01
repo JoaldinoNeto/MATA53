@@ -4,7 +4,7 @@ O algoritmo de ancestrais comuns mais baixos off-line de Tarjan é um algoritmo 
 
 ## Pré-requisitos
 
-- O algoritmo foi desenvolvido utilizando a lingaugem JavaScript, por isso, para executar o código localmente épreciso ter o node/npm instalado. Caso não tenha instalado, [Clique nesse link](https://nodejs.org/en/) e siga as estapas para instalação.
+- O algoritmo foi desenvolvido utilizando a lingaugem JavaScript, por isso, para executar o código localmente, é preciso ter o node/npm instalado. Caso não tenha instalado, [Clique nesse link](https://nodejs.org/en/) e siga as estapas para instalação.
 
 ## Para executar
 
