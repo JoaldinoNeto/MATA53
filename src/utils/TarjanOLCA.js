@@ -43,6 +43,7 @@ let globalTree = [
 
 let lowestCommonAncestorsState = {};
 
+/* remove u para um conjunto de singleton */
 function MakeSet(tree, x) {
   // console.log(`MakeSet: ${x}`);
 
@@ -52,6 +53,7 @@ function MakeSet(tree, x) {
   tree[xIndex].rank = 1;
 }
 
+/* Retorna o representante padrão do conjunto contendo u */
 function Find(tree, x) {
   // console.log(`Find: ${x}`);
 
@@ -64,6 +66,7 @@ function Find(tree, x) {
   return tree[xIndex].parent;
 }
 
+/* Mescla o conjunto contendo u com o conjunto contendo v */
 function Union(tree, x, y) {
   // console.log(`Union: ${x}, ${y}`);
 
@@ -80,6 +83,7 @@ function Union(tree, x, y) {
   }
 }
 
+/* Função principal */
 function TarjanOLCA(tree, currentNode, setState) {
   console.log("=====");
   console.log(`-> node: ${currentNode}`);
