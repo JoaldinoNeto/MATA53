@@ -22,7 +22,7 @@ Para acessar a demonstração [clique aqui](https://mata-53.vercel.app).
 
 - O algoritmo pricipal, que executa o "Tarjan's off-line lowest common ancestors algorithm", está dentro da pasta src > utils > TarjanOLCA.js
 - Foi utilizado React para facilitar/agilizar o desenvolvimento web. Mas a estrura foi simplificada para que não ficasse tão complicado o entendimento do mesmo.
-- A interface web está implementada no arquivo src > App.js. E nesse mesmo arquivo o TarjanOLCA.js é importado e executado.
+- A interface web está implementada no arquivo src > App.js (e nos componentes imporatdos nesse arquivo). O arquivo TarjanOLCA.js é importado e executado no arquivo src > components > Aside > index.js.
 
 ### Algoritmo principal
 
