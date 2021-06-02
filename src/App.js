@@ -1,81 +1,18 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 
-import Button from "@material-ui/core/Button";
 import Graph from "react-graph-vis";
-import { isEmpty, pick } from "lodash";
+import { isEmpty } from "lodash";
 
-import { Container, Aside, FormCreateGraph } from "./style";
-import TarjanOLCA from "./utils/TarjanOLCA";
+import Aside from "./components/Aside";
+import { Container } from "./style";
 
 function App() {
-  const [inputValues, setInputValues] = useState([
-    { nodeKey: "node_0", nodeValue: "", linkKey: "link_0", linkValue: "" },
-  ]);
   const [lowestCommonAncestors, setLowestCommonAncestors] = useState({});
   const [graph, setGraph] = useState({ nodes: [], edges: [] });
 
   const [resInputValues, setResInputValues] = useState([
     { n_one: "", n_two: "" },
   ]);
-
-  const handleSubmitForm = () => {
-    let currentTree = [];
-
-    for (let index in inputValues) {
-      if (inputValues[index].nodeValue) {
-        currentTree.push({
-          id: typeof index === "string" ? parseInt(index, 10) : index,
-          label: inputValues[index].nodeValue || inputValues[index].nodeKey,
-          children:
-            inputValues[index]?.linkValue &&
-            inputValues[index]?.linkValue.length > 0
-              ? (inputValues[index].linkValue || "")
-                  .replaceAll(" ", "")
-                  .split(",")
-              : [],
-          parent: undefined,
-          rank: undefined,
-          ancestor: undefined,
-          color: "white",
-        });
-      }
-    }
-
-    // Dsenha Grafo
-    let currentGraph = {
-      nodes: currentTree.map((node) => pick(node, ["id", "label"])),
-      edges: [],
-    };
-    for (let node of currentTree || []) {
-      for (let children of node?.children || []) {
-        currentGraph.edges.push({
-          from: node.id,
-          to: currentTree.find((n) => n.label === children)?.id,
-        });
-      }
-    }
-    setGraph(currentGraph);
-
-    // Executa algortimo
-    TarjanOLCA(currentTree, currentTree[0].label, setLowestCommonAncestors);
-
-    // console.log(currentTree);
-  };
-
-  const handleInputValues = (element) => {
-    const index = inputValues.findIndex(
-      (obj) =>
-        obj.nodeKey === element.currentTarget.name ||
-        obj.linkKey === element.currentTarget.name
-    );
-
-    const newInputValues = [...inputValues];
-    newInputValues[index][
-      element.currentTarget.name.includes("node") ? "nodeValue" : "linkValue"
-    ] = element.currentTarget.value;
-
-    setInputValues(newInputValues);
-  };
 
   const options = {
     layout: {
@@ -95,69 +32,10 @@ function App() {
 
   return (
     <Container>
-      <Aside>
-        <h2>Construa seu Gráfico</h2>
-
-        <div>
-          <FormCreateGraph>
-            <div>
-              <span>"Nome" dos nós (o primeiro nó será a raiz)</span>
-              <span>"Filhos" dos nós (separado por vírgula)</span>
-
-              <span>EX.: A</span>
-              <span>EX.: B, C</span>
-
-              <span>EX.: B</span>
-              <span></span>
-
-              <span>EX.: C</span>
-              <span></span>
-
-              {(inputValues || []).map((input) => (
-                <Fragment key={input.nodeKey}>
-                  <input
-                    type="text"
-                    name={input.nodeKey}
-                    onChange={(element) => handleInputValues(element)}
-                  />
-                  <input
-                    type="text"
-                    name={input.linkKey}
-                    onChange={(element) => handleInputValues(element)}
-                  />
-                </Fragment>
-              ))}
-
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  const newInputValues = [...inputValues];
-                  newInputValues.push({
-                    nodeKey: `node_${(inputValues || []).length}`,
-                    nodeValue: "",
-                    linkKey: `link_${(inputValues || []).length}`,
-                    linkValue: "",
-                  });
-
-                  setInputValues(newInputValues);
-                }}
-              >
-                Adicionar nó
-              </Button>
-            </div>
-
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{ marginTop: 32 }}
-              onClick={handleSubmitForm}
-            >
-              Carregar Grafo
-            </Button>
-          </FormCreateGraph>
-        </div>
-      </Aside>
+      <Aside
+        setLowestCommonAncestors={setLowestCommonAncestors}
+        setGraph={setGraph}
+      />
 
       <div style={{ width: "100%", height: "100%" }}>
         <div>
